@@ -8,6 +8,8 @@ API or on-disk format changes bump the minor.
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-09-14
+
 ### Added
 
 - WinUI-style custom title bar with Windows 11 caption buttons.
@@ -27,4 +29,5 @@ API or on-disk format changes bump the minor.
 
 - Dependencies in `package.json` and `Cargo.toml` are listed in alphabetical order.
 
-[unreleased]: https://github.com/amsokol/tauri-bun-react-astryx-app/compare/main...HEAD
+[unreleased]: https://github.com/amsokol/tauri-bun-react-astryx-app/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/amsokol/tauri-bun-react-astryx-app/releases/tag/v0.1.0
