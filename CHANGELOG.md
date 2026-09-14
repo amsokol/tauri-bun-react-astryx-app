@@ -11,10 +11,17 @@ API or on-disk format changes bump the minor.
 ### Added
 
 - Astryx CLI and `AGENTS.md` so agents can look up components, templates, and theme docs.
+- Astryx 0.6.1 (core, Neutral theme, StyleX) on the welcome screen.
+- Official Astryx mark on the home screen, linking to the design system docs.
 
 ### Changed
 
 - markdownlint ignores generated `AGENTS.md`.
+- Windows light/dark mode and accent color drive the Astryx `Theme` provider.
+
+### Fixed
+
+- Close caption glyph stays white on the red hover background.
 
 ## [0.1.0] - 2026-09-14
 

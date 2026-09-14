@@ -1,8 +1,9 @@
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { getCurrentWindow } from "@tauri-apps/api/window";
+import { useEffect, useState } from "react";
 
-type SystemAppearance = {
+export type SystemAppearance = {
   accent: string;
   dark: boolean;
 };
@@ -16,24 +17,6 @@ function applyDocumentTheme(isDark: boolean) {
   document.documentElement.style.colorScheme = isDark ? "dark" : "light";
 }
 
-function relativeLuminance(hex: string): number {
-  const red = Number.parseInt(hex.slice(1, 3), 16);
-  const green = Number.parseInt(hex.slice(3, 5), 16);
-  const blue = Number.parseInt(hex.slice(5, 7), 16);
-  return (0.2126 * red + 0.7152 * green + 0.0722 * blue) / 255;
-}
-
-function applySystemAccent(hex: string) {
-  if (!/^#[0-9a-fA-F]{6}$/.test(hex)) {
-    return;
-  }
-
-  const foreground = relativeLuminance(hex) > 0.55 ? "#000000" : "#ffffff";
-  const root = document.documentElement.style;
-  root.setProperty("--primary", hex);
-  root.setProperty("--primary-foreground", foreground);
-}
-
 async function syncWindowTheme(isDark: boolean) {
   if (!isTauriRuntime()) {
     return;
@@ -43,8 +26,11 @@ async function syncWindowTheme(isDark: boolean) {
 
 function applyAppearance(appearance: SystemAppearance) {
   applyDocumentTheme(appearance.dark);
-  applySystemAccent(appearance.accent);
   void syncWindowTheme(appearance.dark);
+}
+
+export function getPrefersDark() {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches;
 }
 
 export async function initAppearance() {
@@ -67,6 +53,56 @@ export async function initAppearance() {
     applyDocumentTheme(media.matches);
     await syncWindowTheme(media.matches);
   }
+}
+
+export function useSystemAppearance(): SystemAppearance {
+  const [appearance, setAppearance] = useState<SystemAppearance>(() => ({
+    accent: "",
+    dark: getPrefersDark(),
+  }));
+
+  useEffect(() => {
+    if (!isTauriRuntime()) {
+      const media = window.matchMedia("(prefers-color-scheme: dark)");
+      const onChange = (event: MediaQueryListEvent) => {
+        setAppearance((current) => ({ ...current, dark: event.matches }));
+      };
+      media.addEventListener("change", onChange);
+      return () => media.removeEventListener("change", onChange);
+    }
+
+    let unlisten: (() => void) | undefined;
+    let disposed = false;
+
+    void (async () => {
+      try {
+        const next = await invoke<SystemAppearance>("system_appearance");
+        if (!disposed) {
+          setAppearance(next);
+        }
+        unlisten = await listen<SystemAppearance>(
+          "system-appearance-changed",
+          (event) => {
+            setAppearance(event.payload);
+          },
+        );
+      } catch {
+        if (!disposed) {
+          setAppearance({
+            accent: "",
+            dark: getPrefersDark(),
+          });
+        }
+      }
+    })();
+
+    return () => {
+      disposed = true;
+      unlisten?.();
+    };
+  }, []);
+
+  return appearance;
 }
 
 export async function revealWindow() {

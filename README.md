@@ -8,6 +8,7 @@ The window uses an undecorated WinUI-style title bar with Mica. It follows the W
 
 - Tauri 2 and Rust (edition 2024, toolchain `1.98.1`)
 - Bun, Vite, React 19, and TypeScript
+- Astryx design system (`@astryxdesign/core` 0.6.1, Neutral theme)
 - mimalloc as the Rust global allocator
 
 ## Develop

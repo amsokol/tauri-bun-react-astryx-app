@@ -12,9 +12,13 @@
     "lint:frontend": "biome check .",
     "lint:rust": "cargo fmt --all --manifest-path src-tauri/Cargo.toml -- --check && cargo clippy --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings",
     "lint:md": "markdownlint-cli2",
-    "lint:fix": "biome check --write . && cargo fmt --all --manifest-path src-tauri/Cargo.toml && markdownlint-cli2 --fix"
+    "lint:fix": "biome check --write . && cargo fmt --all --manifest-path src-tauri/Cargo.toml && markdownlint-cli2 --fix",
+    "astryx": "node node_modules/@astryxdesign/cli/clients/cli/bin/astryx.mjs"
   },
   "dependencies": {
+    "@astryxdesign/core": "=0.6.1",
+    "@astryxdesign/theme-neutral": "=0.6.1",
+    "@stylexjs/stylex": "=0.19.0",
     "@tauri-apps/api": "=2.11.1",
     "@tauri-apps/plugin-opener": "=2.5.5",
     "react": "=19.3.0",
