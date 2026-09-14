@@ -8,6 +8,14 @@ API or on-disk format changes bump the minor.
 
 ## [Unreleased]
 
+### Added
+
+- Astryx CLI and `AGENTS.md` so agents can look up components, templates, and theme docs.
+
+### Changed
+
+- markdownlint ignores generated `AGENTS.md`.
+
 ## [0.1.0] - 2026-09-14
 
 ### Added
