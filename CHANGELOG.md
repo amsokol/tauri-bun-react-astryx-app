@@ -8,6 +8,8 @@ API or on-disk format changes bump the minor.
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-09-14
+
 ### Added
 
 - Astryx CLI and `AGENTS.md` so agents can look up components, templates, and theme docs.
@@ -44,5 +46,6 @@ API or on-disk format changes bump the minor.
 
 - Dependencies in `package.json` and `Cargo.toml` are listed in alphabetical order.
 
-[unreleased]: https://github.com/amsokol/tauri-bun-react-astryx-app/compare/v0.1.0...HEAD
+[unreleased]: https://github.com/amsokol/tauri-bun-react-astryx-app/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/amsokol/tauri-bun-react-astryx-app/releases/tag/v0.1.1
 [0.1.0]: https://github.com/amsokol/tauri-bun-react-astryx-app/releases/tag/v0.1.0

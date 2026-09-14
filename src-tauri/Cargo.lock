@@ -3468,7 +3468,7 @@ dependencies = [
 
 [[package]]
 name = "tauri-bun-react-astryx-app"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "mimalloc",
  "serde",
